@@ -1,18 +1,36 @@
 /** @type {import('tailwindcss').Config} */
+
+const { fontFamily } = require(`tailwindcss/defaultTheme`)
+const colors = require('tailwindcss/colors')
+
 module.exports = {
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  content: [ "./src/**/*.{js,ts,jsx,tsx}", ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      fontFamily: {
+        sans: ['Fira Sans', ...fontFamily.sans],
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            a: {
+              color: theme('colors.current'),
+            },
+          },
+        },
+      }),
+    },
+    colors: {
+      inherit: 'inherit',
+      transparent: 'transparent',
+      current: 'currentColor',
+      black: '#000000',
+      white: '#ffffff',
+      gray: colors.slate,
+      primary: colors.indigo,
+      secondary: colors.rose,
+      tertiary: colors.emerald,
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
 }
