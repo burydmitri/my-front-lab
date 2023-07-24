@@ -1,4 +1,4 @@
-
+import { NavLinks } from '@/components/nav-links'
 
 export default function Home() {
   return (
@@ -22,11 +22,8 @@ export default function Home() {
                   Here I will study and test some functions, cases, libraries
                 </p>
                 <br />
-                <p
-                  className="prose prose-xl px-16 text-gray-500 md:px-0"
-                >
-                  
-                </p>
+                <br />
+                <NavLinks className = "prose-xl"/>
                 <br />
               </div>
             </div>

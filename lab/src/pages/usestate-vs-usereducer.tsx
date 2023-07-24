@@ -1,0 +1,133 @@
+import { useState, useReducer } from "react";
+
+
+export default function useStateVSuseReducer() {
+
+  // useState
+  const [password, setPassword] = useState('useState');
+  function changePassword() {
+    let newPassword : string = prompt("Введите новый пароль:  ") || '1234567890';
+    setPassword(newPassword)
+  }
+  function encryptPassword() {
+    const newPassword : string = password.split('').map(value => value.charCodeAt(0) ^ 1).join(' ')
+    setPassword(newPassword)
+  }
+  function decipherPassword() {
+    const newPassword : string = password.split(' ').map(value => Number(value) ^ 1).map(value => String.fromCharCode(value)).join('')
+    setPassword(newPassword)
+  }
+
+  // useReducer
+  function reducer(password2: any, action: string) {
+    switch (action) {
+      case 'change' : {
+        let newPassword: string = prompt("Введите новый пароль:  ") || '1234567890';
+        return newPassword
+      }
+      case 'encrypt' : {
+        const newPassword : string = password2.split('').map((value: string) => value.charCodeAt(0) ^ 1).join(' ')
+        return newPassword
+      }
+      case 'decode' : {
+        const newPassword : string = password2.split(' ').map((value: string) => Number(value) ^ 1).map((value: number) => String.fromCharCode(value)).join('')
+        return newPassword
+      }
+      throw Error('Unknown action: ' + action);
+    }
+  }
+  const [password2, dispatch] = useReducer(reducer, 'useReducer');
+
+
+  return (
+    <section className="text-center lg:w-full lg:py-20 lg:text-left">
+        <div className="hero mx-auto w-full max-w-6xl px-6">
+          <div className="hero-inner w-full relative lg:flex">
+            <div
+              className="hero-copy w-full bg-white pt-10 pb-16 lg:pt-16 lg:pr-20"
+              style={{ minWidth: '600px' }}
+            >
+              <div className="mx-auto w-full max-w-3xl">
+                <h1 className="mt-0 mb-4 text-4xl font-bold md:text-5xl ">
+                  useState vs useReducer ⚓
+                </h1>
+                <br />
+                <p className="prose-m px-12 text-gray-500 md:px-0">In order to understand and feel the difference between these hooks and figure out which one is better to use and when, I will compare them for the same task</p>
+                <br/>
+                <p className="prose-m px-12 text-gray-500 md:px-0">We have password. Let's realize the opportunity to change, encrypt or decipher it</p>
+                <br/>
+                <br/>
+                <p className="prose-m px-12 text-gray-500 md:px-0">useState</p>
+                <p>password: {password}</p>
+                <div className="control">
+                  <button
+                    className="-mt-px inline-flex cursor-pointer justify-center whitespace-nowrap rounded-sm border-0 bg-gradient-to-r from-secondary-500 to-secondary-400 py-4 px-7 text-center font-medium leading-4 text-white no-underline shadow-lg mr-2 mt-2"
+                    type="submit"
+                    onClick={changePassword}
+                  >
+                    change
+                  </button>
+                  <button
+                    className="-mt-px inline-flex cursor-pointer justify-center whitespace-nowrap rounded-sm border-0 bg-gradient-to-r from-secondary-500 to-secondary-400 py-4 px-7 text-center font-medium leading-4 text-white no-underline shadow-lg mr-2"
+                    type="submit"
+                    onClick={encryptPassword}
+                  >
+                    encrypt
+                  </button>
+                  <button
+                    className="-mt-px inline-flex cursor-pointer justify-center whitespace-nowrap rounded-sm border-0 bg-gradient-to-r from-secondary-500 to-secondary-400 py-4 px-7 text-center font-medium leading-4 text-white no-underline shadow-lg"
+                    type="submit"
+                    onClick={decipherPassword}
+                  >
+                    decode
+                  </button>
+                </div>
+
+
+
+                
+                <br />
+                <p className="prose-m px-12 text-gray-500 md:px-0">useReducer</p>
+                <p>password: {password2}</p>
+                <div className="control">
+                  <button
+                    className="-mt-px inline-flex cursor-pointer justify-center whitespace-nowrap rounded-sm border-0 bg-gradient-to-r from-secondary-500 to-secondary-400 py-4 px-7 text-center font-medium leading-4 text-white no-underline shadow-lg mr-2 mt-2"
+                    type="submit"
+                    onClick={() => dispatch('change')}
+                  >
+                    change
+                  </button>
+                  <button
+                    className="-mt-px inline-flex cursor-pointer justify-center whitespace-nowrap rounded-sm border-0 bg-gradient-to-r from-secondary-500 to-secondary-400 py-4 px-7 text-center font-medium leading-4 text-white no-underline shadow-lg mr-2"
+                    type="submit"
+                    onClick={() => dispatch('encrypt')}
+                  >
+                    encrypt
+                  </button>
+                  <button
+                    className="-mt-px inline-flex cursor-pointer justify-center whitespace-nowrap rounded-sm border-0 bg-gradient-to-r from-secondary-500 to-secondary-400 py-4 px-7 text-center font-medium leading-4 text-white no-underline shadow-lg"
+                    type="submit"
+                    onClick={() => dispatch('decode')}
+                  >
+                    decode
+                  </button>
+              </div>
+              <br />
+              <a href="https://github.com/burydmitri/my-front-lab/tree/master/lab/src/pages/usestate-vs-usereducer.tsx" className="border-b lg:text-gray-400">
+                Code on github
+              </a>
+
+              <br />
+              <br />
+              <br />
+
+              <p className="font-medium">UseReducer is an alternative to useState, they do the same thing. But in my opinion, useReducer is more cumbersome and now i can't imagine case, where usage of this hook really better that useState</p>
+              <br/>
+              <p className="text-right">24.07.2023</p>
+            </div>
+          </div>
+          </div>
+        </div>
+      </section>
+  )
+}
