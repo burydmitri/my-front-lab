@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Fira Sans', ...fontFamily.sans],
+        mono: ['Space Mono', ...fontFamily.mono]
       },
       typography: (theme) => ({
         DEFAULT: {

@@ -2,7 +2,10 @@ import Link from "next/link";
 
 const NAV_LINKS = [
   { name: "1. UseState vs useReducer ⚓", to: "/usestate-vs-usereducer" },
-  { name: "2. Random joke API usage + Typed.js 🤡", to: "/random-joke-api" },
+  {
+    name: "2. Text animations + random joke API usage 🤡",
+    to: "/random-joke-api",
+  },
 ];
 
 export function NavLinks({ className }: { className?: string }) {

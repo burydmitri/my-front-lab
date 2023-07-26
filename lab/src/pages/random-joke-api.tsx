@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import Typed from "typed.js";
 
 interface iJoke {
   setup: string;
   punchline: string;
 }
 export default function randomJoke() {
+  const el = useRef(null);
   const [joke, setJoke] = useState<iJoke>({ setup: "", punchline: "" });
 
   async function fetchJoke() {
@@ -26,22 +28,36 @@ export default function randomJoke() {
     fetchJoke();
   }, []);
 
+  useEffect(() => {
+    const typed = new Typed(el.current, {
+      strings: [`${joke.setup}`, `${joke.punchline}`],
+      typeSpeed: 70,
+    });
+
+    return () => {
+      typed.destroy();
+    };
+  }, [joke]);
+
   return (
     <>
       <h1 className="mt-0 mb-4 text-4xl font-bold md:text-5xl ">
-        Typed.js + random joke 🤡
+        Text animations + jokes 🤡
       </h1>
       <br />
       <p className="prose-m px-12 text-gray-500 md:px-0">
-        I want to try some animation libs. Typed.js looks like something that
-        can be used often
+        I want to try some animation libs (here I test only text effects)
       </p>
 
       <br />
       <br />
-      <br />
+      <h2 className="mt-0 mb-4 font-bold md:text-2xl ">
+        <a href="https://github.com/mattboldt/typed.js/">types.js</a>
+      </h2>
 
-      <p>{joke.setup ? `${joke.setup}\n ${joke.punchline}` : "Loading..."}</p>
+      <div className="bg-gray-800 p-10 rounded-xl">
+        <span ref={el} className="text-tertiary-300 font-mono"></span>
+      </div>
 
       <br />
       <a

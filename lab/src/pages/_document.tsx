@@ -12,6 +12,10 @@ export default function Document() {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Fira+Sans:400,400i,500,700"
         />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Space+Mono:400"
+        />
       </Head>
       <body>
         <Main />
