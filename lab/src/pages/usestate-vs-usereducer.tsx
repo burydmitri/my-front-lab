@@ -152,9 +152,10 @@ export default function useStateVSuseReducer() {
               <br />
               <br />
 
-              <p className="font-medium">UseReducer is an alternative to useState, they do the same thing. But in my opinion, useReducer is more cumbersome and now i can't imagine case, where usage of this hook really better that useState</p>
+              <p className="font-medium">UseReducer is an alternative to useState, they do the same thing. </p>
+              <p className="font-medium">In huge components it can be more comfortable to see all variations of changing of state in one place - reducer.
+              But in common cases i prefer useState, because, in my opinion useReducer is more cumbersome</p>
               <br/>
-              <p className="text-right">24.07.2023</p>
             </div>
           </div>
           </div>
