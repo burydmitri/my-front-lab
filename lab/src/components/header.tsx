@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from "next/link";
 
 export function Header({ title }: { title?: string }) {
   return (
@@ -13,5 +13,5 @@ export function Header({ title }: { title?: string }) {
         </div>
       </div>
     </header>
-  )
+  );
 }
