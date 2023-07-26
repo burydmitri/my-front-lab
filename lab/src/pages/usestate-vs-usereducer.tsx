@@ -5,6 +5,7 @@ export default function useStateVSuseReducer() {
 
   // useState
   const [password, setPassword] = useState('useState');
+  const [counter1, setCounter1] = useState(0);
   function changePassword() {
     let newPassword : string = prompt("Введите новый пароль:  ") || '1234567890';
     setPassword(newPassword)
@@ -12,14 +13,29 @@ export default function useStateVSuseReducer() {
   function encryptPassword() {
     const newPassword : string = password.split('').map(value => value.charCodeAt(0) ^ 1).join(' ')
     setPassword(newPassword)
+    setCounter1(counter1 + 1)
   }
   function decipherPassword() {
-    const newPassword : string = password.split(' ').map(value => Number(value) ^ 1).map(value => String.fromCharCode(value)).join('')
-    setPassword(newPassword)
+    if (counter1) {
+      const newPassword : string = password.split(' ').map(value => Number(value) ^ 1).map(value => String.fromCharCode(value)).join('')
+      setPassword(newPassword)
+      setCounter1(counter1 - 1)
+    }
   }
 
   // useReducer
-  function reducer(password2: any, action: string) {
+  function counterReducer(counter: any, action: string) {
+    switch (action) {
+      case 'plus' : {
+        return counter + 1
+      }
+      case 'minus' : {
+        return counter - 1
+      }
+      throw Error('Unknown action: ' + action);
+    }
+  }
+  function passwordReducer(password2: any, action: string) {
     switch (action) {
       case 'change' : {
         let newPassword: string = prompt("Введите новый пароль:  ") || '1234567890';
@@ -36,7 +52,20 @@ export default function useStateVSuseReducer() {
       throw Error('Unknown action: ' + action);
     }
   }
-  const [password2, dispatch] = useReducer(reducer, 'useReducer');
+  const [counter2, dispatchCounter] = useReducer(counterReducer, 0);
+  const [password2, dispatchPassword] = useReducer(passwordReducer, 'useReducer');
+  
+  function handleEncrypt() {
+    dispatchPassword('encrypt')
+    dispatchCounter('plus')
+  }
+  function handleDecode() {
+    if (counter2) {
+      dispatchPassword('decode')
+      dispatchCounter('minus')
+    }
+  }
+
 
 
   return (
@@ -78,6 +107,7 @@ export default function useStateVSuseReducer() {
                     className="-mt-px inline-flex cursor-pointer justify-center whitespace-nowrap rounded-sm border-0 bg-gradient-to-r from-secondary-500 to-secondary-400 py-4 px-7 text-center font-medium leading-4 text-white no-underline shadow-lg"
                     type="submit"
                     onClick={decipherPassword}
+                    style={ counter1 ? {} : {opacity: '.5', cursor: 'not-allowed'}}
                   >
                     decode
                   </button>
@@ -93,21 +123,22 @@ export default function useStateVSuseReducer() {
                   <button
                     className="-mt-px inline-flex cursor-pointer justify-center whitespace-nowrap rounded-sm border-0 bg-gradient-to-r from-secondary-500 to-secondary-400 py-4 px-7 text-center font-medium leading-4 text-white no-underline shadow-lg mr-2 mt-2"
                     type="submit"
-                    onClick={() => dispatch('change')}
+                    onClick={() => dispatchPassword('change')}
                   >
                     change
                   </button>
                   <button
                     className="-mt-px inline-flex cursor-pointer justify-center whitespace-nowrap rounded-sm border-0 bg-gradient-to-r from-secondary-500 to-secondary-400 py-4 px-7 text-center font-medium leading-4 text-white no-underline shadow-lg mr-2"
                     type="submit"
-                    onClick={() => dispatch('encrypt')}
+                    onClick={handleEncrypt}
                   >
                     encrypt
                   </button>
                   <button
                     className="-mt-px inline-flex cursor-pointer justify-center whitespace-nowrap rounded-sm border-0 bg-gradient-to-r from-secondary-500 to-secondary-400 py-4 px-7 text-center font-medium leading-4 text-white no-underline shadow-lg"
                     type="submit"
-                    onClick={() => dispatch('decode')}
+                    onClick={handleDecode}
+                    style={ counter2 ? {} : {opacity: '.5', cursor: 'not-allowed'}}
                   >
                     decode
                   </button>
