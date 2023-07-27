@@ -6,7 +6,10 @@ interface iJoke {
   punchline: string;
 }
 export default function randomJoke() {
-  const el = useRef(null);
+  const el1 = useRef(null);
+  const el2 = useRef(null);
+  const el3 = useRef(null);
+  const el4 = useRef(null);
   const [joke, setJoke] = useState<iJoke>({ setup: "", punchline: "" });
 
   async function fetchJoke() {
@@ -29,9 +32,53 @@ export default function randomJoke() {
   }, []);
 
   useEffect(() => {
-    const typed = new Typed(el.current, {
+    const typed = new Typed(el1.current, {
       strings: [`${joke.setup}`, `${joke.punchline}`],
       typeSpeed: 70,
+    });
+
+    return () => {
+      typed.destroy();
+    };
+  }, [joke]);
+  useEffect(() => {
+    const typed = new Typed(el2.current, {
+      cursorChar: "👨‍💻",
+      strings: [`${joke.setup}`, `${joke.punchline}`],
+
+      loop: true,
+      typeSpeed: 100,
+
+      fadeOut: true,
+      fadeOutDelay: 2000,
+    });
+
+    return () => {
+      typed.destroy();
+    };
+  }, [joke]);
+  useEffect(() => {
+    const typed = new Typed(el3.current, {
+      strings: [
+        `And another one window...`,
+        `And another for observing Smart Backspacing`,
+        `And 😺😺😺😺😺😺`,
+      ],
+      typeSpeed: 50,
+
+      loop: true,
+    });
+
+    return () => {
+      typed.destroy();
+    };
+  }, [joke]);
+
+  useEffect(() => {
+    const typed = new Typed(el4.current, {
+      strings: [`${joke.setup}^1000 '${joke.punchline}'`],
+      loop: true,
+      typeSpeed: 30,
     });
 
     return () => {
@@ -56,10 +103,29 @@ export default function randomJoke() {
       </h2>
 
       <div className="bg-gray-800 p-10 rounded-xl">
-        <span ref={el} className="text-tertiary-300 font-mono"></span>
+        <span ref={el1} className="text-tertiary-300 font-mono"></span>
       </div>
+      <br />
+      <div className="bg-gray-800 p-10 rounded-xl">
+        <span ref={el2} className="text-tertiary-300 font-mono"></span>
+      </div>
+      <br />
+      <div className="bg-gray-800 p-10 rounded-xl">
+        <span ref={el3} className="text-tertiary-300 font-mono"></span>
+      </div>
+      <br />
+      <div className="bg-gray-800 p-10 rounded-xl">
+        <span ref={el4} className="text-tertiary-300 font-mono"></span>
+      </div>
+      <br />
+
+      <p>
+        Typed.js is a library that types. A simple tool with enough settings
+      </p>
 
       <br />
+      <br />
+
       <a
         href="https://github.com/burydmitri/my-front-lab/tree/master/lab/src/pages/random-joke-api.tsx"
         className="border-b lg:text-gray-400"
