@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Typed from "typed.js";
-
+import { VaraJoke } from "@/components/vara-joke";
 interface iJoke {
   setup: string;
   punchline: string;
@@ -85,7 +85,6 @@ export default function randomJoke() {
       typed.destroy();
     };
   }, [joke]);
-
   return (
     <>
       <h1 className="mt-0 mb-4 text-4xl font-bold md:text-5xl ">
@@ -99,7 +98,7 @@ export default function randomJoke() {
       <br />
       <br />
       <h2 className="mt-0 mb-4 font-bold md:text-2xl ">
-        <a href="https://github.com/mattboldt/typed.js/">types.js</a>
+        <a href="https://github.com/mattboldt/typed.js/">Types.js</a>
       </h2>
 
       <div className="bg-gray-800 p-10 rounded-xl">
@@ -121,6 +120,45 @@ export default function randomJoke() {
 
       <p>
         Typed.js is a library that types. A simple tool with enough settings
+      </p>
+
+      <br />
+      <br />
+
+      <h2 className="mt-0 mb-4 font-bold md:text-2xl ">
+        <a href="https://github.com/akzhy/Vara">Vara.js</a>
+      </h2>
+
+      <VaraJoke id="vara1" setup={joke.setup} punch={joke.punchline}></VaraJoke>
+      <br />
+      <VaraJoke
+        id="vara2"
+        setup={joke.setup}
+        punch={joke.punchline}
+        font={2}
+      ></VaraJoke>
+      <br />
+      <VaraJoke
+        id="vara3"
+        setup={joke.setup}
+        punch={joke.punchline}
+        width={1}
+        font={3}
+      ></VaraJoke>
+      <br />
+      <VaraJoke
+        id="vara4"
+        setup={joke.setup}
+        punch={joke.punchline}
+        width={2}
+        font={4}
+        color="#be185d"
+      ></VaraJoke>
+
+      <br />
+
+      <p>
+        Vara is a javascript library that can create text drawing animations. There are 4 fonts, but you can make custom
       </p>
 
       <br />
