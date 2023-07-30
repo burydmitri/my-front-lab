@@ -1,15 +1,11 @@
-import { useState, useEffect, useRef } from "react";
-import Typed from "typed.js";
+import { useState, useEffect } from "react";
+import { TypedJoke } from "@/components/typed-joke";
 import { VaraJoke } from "@/components/vara-joke";
 interface iJoke {
   setup: string;
   punchline: string;
 }
 export default function randomJoke() {
-  const el1 = useRef(null);
-  const el2 = useRef(null);
-  const el3 = useRef(null);
-  const el4 = useRef(null);
   const [joke, setJoke] = useState<iJoke>({ setup: "", punchline: "" });
 
   async function fetchJoke() {
@@ -31,60 +27,6 @@ export default function randomJoke() {
     fetchJoke();
   }, []);
 
-  useEffect(() => {
-    const typed = new Typed(el1.current, {
-      strings: [`${joke.setup}`, `${joke.punchline}`],
-      typeSpeed: 70,
-    });
-
-    return () => {
-      typed.destroy();
-    };
-  }, [joke]);
-  useEffect(() => {
-    const typed = new Typed(el2.current, {
-      cursorChar: "👨‍💻",
-      strings: [`${joke.setup}`, `${joke.punchline}`],
-
-      loop: true,
-      typeSpeed: 100,
-
-      fadeOut: true,
-      fadeOutDelay: 2000,
-    });
-
-    return () => {
-      typed.destroy();
-    };
-  }, [joke]);
-  useEffect(() => {
-    const typed = new Typed(el3.current, {
-      strings: [
-        `And another one window...`,
-        `And another for observing Smart Backspacing`,
-        `And 😺😺😺😺😺😺`,
-      ],
-      typeSpeed: 50,
-
-      loop: true,
-    });
-
-    return () => {
-      typed.destroy();
-    };
-  }, [joke]);
-
-  useEffect(() => {
-    const typed = new Typed(el4.current, {
-      strings: [`${joke.setup}^1000 '${joke.punchline}'`],
-      loop: true,
-      typeSpeed: 30,
-    });
-
-    return () => {
-      typed.destroy();
-    };
-  }, [joke]);
   return (
     <>
       <h1 className="mt-0 mb-4 text-4xl font-bold md:text-5xl ">
@@ -101,21 +43,30 @@ export default function randomJoke() {
         <a href="https://github.com/mattboldt/typed.js/">Types.js</a>
       </h2>
 
-      <div className="bg-gray-800 p-10 rounded-xl">
-        <span ref={el1} className="text-tertiary-300 font-mono"></span>
-      </div>
+      <TypedJoke string={[`${joke.setup}`, `${joke.punchline}`]}></TypedJoke>
       <br />
-      <div className="bg-gray-800 p-10 rounded-xl">
-        <span ref={el2} className="text-tertiary-300 font-mono"></span>
-      </div>
+      <TypedJoke
+        string={[`${joke.setup}`, `${joke.punchline}`]}
+        loop={true}
+        fadeOut={true}
+        cursorChar="👨‍💻"
+      ></TypedJoke>
       <br />
-      <div className="bg-gray-800 p-10 rounded-xl">
-        <span ref={el3} className="text-tertiary-300 font-mono"></span>
-      </div>
+      <TypedJoke
+        string={[
+          `And another one window...`,
+          `And another for observing Smart Backspacing`,
+          `And 😺😺😺😺😺😺`,
+        ]}
+        loop={true}
+        typeSpeed={50}
+      ></TypedJoke>
       <br />
-      <div className="bg-gray-800 p-10 rounded-xl">
-        <span ref={el4} className="text-tertiary-300 font-mono"></span>
-      </div>
+      <TypedJoke
+        string={[`${joke.setup}^1000 '${joke.punchline}'`]}
+        loop={true}
+        typeSpeed={30}
+      ></TypedJoke>
       <br />
 
       <p>
@@ -136,6 +87,7 @@ export default function randomJoke() {
         setup={joke.setup}
         punch={joke.punchline}
         font={2}
+        duration={1000}
       ></VaraJoke>
       <br />
       <VaraJoke
@@ -153,12 +105,14 @@ export default function randomJoke() {
         width={2}
         font={4}
         color="#be185d"
+        duration={3500}
       ></VaraJoke>
 
       <br />
 
       <p>
-        Vara is a javascript library that can create text drawing animations. There are 4 fonts, but you can make custom
+        Vara is a javascript library that can create text drawing animations.
+        There are 4 fonts, but you can make custom
       </p>
 
       <br />
