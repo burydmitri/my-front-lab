@@ -1,5 +1,5 @@
 import Vara from "vara";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 interface iVaraJoke {
   id: string;
@@ -22,6 +22,8 @@ export function VaraJoke({
   color = "black",
   duration = 2000,
 }: iVaraJoke) {
+
+  const ref = useRef<HTMLDivElement>(null);
   let fontUrl: string;
   switch (font) {
     case 1: {
@@ -47,6 +49,8 @@ export function VaraJoke({
   }
 
   useEffect(() => {
+    ref.current?.replaceChildren();
+
     let vara = new Vara(
       `#${id}`,
       fontUrl,
@@ -65,7 +69,13 @@ export function VaraJoke({
         duration: duration,
       }
     );
-  }, [setup, punch, font, fontSize]);
+  }, [id, setup, punch, font, fontSize]);
+  return <div id={id} ref={ref} className="bg-gray-100 p-5 rounded-md"></div>;
 
-  return <div id={id} className="bg-gray-100 p-5 rounded-md"></div>;
+
+
+
+
+
+  
 }
